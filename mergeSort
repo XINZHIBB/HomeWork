@@ -1,0 +1,71 @@
+Given an array of integers, sort the elements in the array in ascending order. The merge sort algorithm should be used to solve this problem.
+
+Examples
+
+{1} is sorted to {1}
+{1, 2, 3} is sorted to {1, 2, 3}
+{3, 2, 1} is sorted to {1, 2, 3}
+{4, 2, -3, 6, 1} is sorted to {-3, 1, 2, 4, 6}
+Corner Cases
+
+What if the given array is null? In this case, we do not need to do anything.
+What if the given array is of length zero? In this case, we do not need to do anything.
+
+
+Solution:
+ // Step1: split the array to two equal size array 
+ // Step2: sort these two array by calling recursion function 
+ // Step3: combine these two sorted array to the final sorted array
+ 
+ // Time complexity: O(nlogn) 
+ // Space complexity: O(n)
+ 
+ 
+ 
+ 
+ public class Solution {
+  public int[] mergeSort(int[] array) {
+    // Write your solution here.
+    // Sanity Check 
+    if (array == null || array.length == 0) {
+      return array;
+    }
+    
+    // Allocate the helpArray 
+    int[] helpArray = new int[array.length];
+    
+    // Use helper function to get the result
+    helpMerge(array, helpArray, 0, array.length - 1);
+    return array;
+  }
+  
+  private void helpMerge(int[] array, int[] helpArray, int left, int right) {
+    // Base case 
+    if (left == right) {
+      return; 
+    }
+    
+    int mid = left + (right - left) / 2;
+    helpMerge(array, helpArray, left, mid);
+    helpMerge(array, helpArray, mid + 1, right);
+    // Recursion rule : combination 
+    int leftIndex = left; 
+    int rightIndex = mid + 1;
+    
+    for (int i = left; i <= right; i++) {
+      helpArray[i] = array[i]; 
+    }
+    
+    while (leftIndex <= mid && rightIndex <= right) {
+      if (helpArray[leftIndex] < helpArray[rightIndex]) {
+        array[left++] = helpArray[leftIndex++];
+      } else {
+        array[left++] = helpArray[rightIndex++];
+      }
+    }
+    
+    while (leftIndex <= mid) {
+      array[left++] = helpArray[leftIndex++];
+    }
+  }
+}
