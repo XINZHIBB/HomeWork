@@ -1,0 +1,59 @@
+Given an array of balls, where the color of the balls can only be Red, Green or Blue, sort the balls such that all the Red balls are grouped on the left side, all the Green balls are grouped in the middle and all the Blue balls are grouped on the right side. (Red is denoted by -1, Green is denoted by 0, and Blue is denoted by 1).
+
+Examples
+
+{0} is sorted to {0}
+{1, 0} is sorted to {0, 1}
+{1, 0, 1, -1, 0} is sorted to {-1, 0, 0, 1, 1}
+Assumptions
+
+The input array is not null.
+Corner Cases
+
+What if the input array is of length zero? In this case, we should not do anything as well.
+
+
+Solution: 
+
+variable: i, j, k to make 
+          [0,i) : -1 
+          [i,j) : 0 
+          [j,k] : unknown 
+          (k,length-1] : 1 
+
+public class Solution {
+  public int[] rainbowSort(int[] array) {
+    // Write your solution here.
+    if (array.length == 0) {
+      return array;
+    }
+    
+    int redIndex = 0;
+    int greenIndex = 0;
+    int blueIndex = array.length - 1;
+    
+    // Do partition: [0, redIndex) Redball, [redIndex, greenIndex) Greenball
+    // [greenIndex, buleIndex] unknown area, (blueIndex, right boundary] Buleball
+    
+    while (greenIndex <= blueIndex) {
+      if (array[greenIndex] == 0) {
+        greenIndex ++;
+      } else if (array[greenIndex] == -1) {
+        swap(array, greenIndex, redIndex);
+        redIndex ++;
+        greenIndex ++;
+      } else {
+        swap(array, greenIndex, blueIndex);
+        blueIndex --;
+      }
+    }
+    
+    return array;
+  }
+  
+  private void swap(int[] array, int left, int right) {
+    int temp = array[left];
+    array[left] = array[right];
+    array[right] = temp;
+  }
+}
