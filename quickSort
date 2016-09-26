@@ -1,0 +1,79 @@
+Given an array of integers, sort the elements in the array in ascending order. The quick sort algorithm should be used to solve this problem.
+
+Examples
+
+{1} is sorted to {1}
+{1, 2, 3} is sorted to {1, 2, 3}
+{3, 2, 1} is sorted to {1, 2, 3}
+{4, 2, -3, 6, 1} is sorted to {-3, 1, 2, 4, 6}
+Corner Cases
+
+What if the given array is null? In this case, we do not need to do anything.
+What if the given array is of length zero? In this case, we do not need to do anything.
+
+
+Solution: 
+
+Assumption: 
+1. duplicate number 
+2. null or length = 0 
+3. return type
+
+Step1: Sanity check 
+Step2: Partition the array using the random selected pivot (random pick or select the rightmost one). 
+       Move the elements smaller than pivot to the left and move the elements bigger than the pivot to the right 
+       pivot is already in the right position. 
+Step3: Recursive rule:
+       quickSort the left part of pivot; 
+       quickSort the right part of pivot; 
+
+Time complexity: depends on the choice of the pivot. 
+                 worst case O(n^2) when every time the pivot just slipt the array to 1 and n-1, 
+                 best case  O(nlogn) when every time the pivot split the array to two equal size
+Space complexity: O(logn)  recursive rule called log(n) times every time O(1)
+       
+public class Solution {
+  public int[] quickSort(int[] array) {
+    // Write your solution here
+    if (array == null || array.length == 0) {
+      return array;
+    }
+    helpSort(array, 0, array.length - 1);
+    return array;
+  }
+    private void helpSort(int[] array, int left, int right) {
+      // base case 
+      if (left >= right) {
+        return;
+      }
+      // Choose pivot and do partition 
+      int pivot = array[right];
+      int leftIndex = left; 
+      int rightIndex = right - 1;
+
+      while (leftIndex <= rightIndex) {
+        if(array[leftIndex] < pivot) {
+          leftIndex ++;
+        } else {
+          swap(array, leftIndex, rightIndex);
+          rightIndex --;
+        }
+      }
+      
+      swap(array, leftIndex, right); 
+      
+      //Recursive rule
+      helpSort(array, left, leftIndex - 1);
+      helpSort(array, leftIndex + 1, right);
+    }
+    
+    
+    private void swap(int[] array, int left, int right) {
+      int temp = array[left];
+      array[left] = array[right];
+      array[right] = temp;
+    }
+    
+}
+       
+
