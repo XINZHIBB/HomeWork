@@ -18,6 +18,10 @@ Solution:
 [otherIndex, zeroIndex]: unexplore area;
 (zeroIndex, right boundary]: 0s; 
 
+Time Complexity: O(n)
+Space Complexity: O(1)
+
+
 public class Solution {
   public int[] moveZero(int[] array) {
     // Write your solution here.
