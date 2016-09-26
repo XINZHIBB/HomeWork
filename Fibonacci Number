@@ -18,3 +18,45 @@ Solution:
 Assumption: 
 1. k<0 
 2. overflow so that we return long 
+
+Time complexity: O(n^2) 对于每个n 需要call 两次自己. 总次数n^2
+Space complexity: O(k-1 + k-2) = O(k) 
+
+public class SolutionI {
+  public long fibonacci(int K) {
+    // Write your solution here
+    // sanity check and base case
+    if (K <= 0) {
+      return 0;
+    } else if (K == 1) {
+      return 1;
+    }
+    // recursion rule 
+    return fibonacci(K - 1) + fibonacci(K - 2);
+  }
+}
+
+
+Time complexity: O(k)
+Space complexity: O(k) 
+
+public class Solution {
+  public long fibonacci(int K) {
+    // sanity check 
+    if (K <= 0) {
+      return 0;
+    }
+    if (K == 1) {
+      return 1;
+    }
+    
+    long[] array = new long[K + 1];
+    array[0] = 0;
+    array[1] = 1; 
+    
+    for (int i = 2; i < K + 1; i++) {
+      array[i] = array[i - 1] + array[i - 2];
+    }
+    return array[K];
+  }
+}
