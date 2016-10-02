@@ -1,0 +1,63 @@
+Given a integer dictionary A of unknown size, where the numbers in the dictionary are sorted in ascending order, 
+determine if a given target integer T is in the dictionary. Return the index of T in A, return -1 if T is not in A.
+
+Assumptions
+
+dictionary A is not null
+dictionary.get(i) will return null if index i is out of bounds
+Examples
+
+A = {1, 2, 5, 9, ......}, T = 5, return 2
+A = {1, 2, 5, 9, 12, ......}, T = 7, return -1
+
+Solution: 
+ 
+Assumption: return -1 if not found 
+
+Step1:  Compare with the first element, then the 2n element. 
+        Jump 2 times elements until find one element is bigger than the elemen or out of bounds 
+        Using two index, left point to the current position, right point to the next position 
+Step2: Using binary search to search the area between left and right index. 
+
+Note: 在出现有null的可能的时候， 必须优先处理null的情况 不然会有npe
+/*
+*  interface Dictionary {
+*    public Integer get(int index);
+*  }
+*/
+
+// You do not need to implement the Dictionary interface.
+// You can use it directly, the implementation is provided when testing your solution.
+public class Solution {
+   public int search(Dictionary dict, int target) {
+        // Write your solution here
+        if (dict == null) {
+            return -1;
+        }
+
+        int left = 0;
+        int right = 1;
+
+        while (dict.get(right) != null && dict.get(right) < target) {  //只用确定左右边界
+            left = right;
+            right = right * 2;
+        }
+
+        return  binarySearch(dict, target, left, right);
+    }
+
+    private int binarySearch(Dictionary dict, int target, int left, int right) { 
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (dict.get(mid) == null || dict.get(mid) > target) {
+                right = mid - 1;
+            } else if (dict.get(mid) < target) {
+                left = mid + 1;
+            } else {
+                return mid;
+            }
+
+        }
+        return -1;
+    }
+}
