@@ -1,0 +1,36 @@
+Insert a value in a sorted linked list.
+
+Examples
+
+L = null, insert 1, return 1 -> null
+L = 1 -> 3 -> 5 -> null, insert 2, return 1 -> 2 -> 3 -> 5 -> null
+L = 1 -> 3 -> 5 -> null, insert 3, return 1 -> 3 -> 3 -> 5 -> null
+L = 2 -> 3 -> null, insert 1, return 1 -> 2 -> 3 -> null
+
+Solution: 
+Step1: Dummy node as head, simpify the operation. 
+Step2: compare value with cur.value, 
+       if value > cur.value, then cur = cur.next until the tail 
+       if value <= cur.value, then insert before this value 
+
+public class Solution {
+  public ListNode insert(ListNode head, int value) {
+    // write your solution here
+    ListNode dummyNode = new ListNode(0); 
+    ListNode insertNode = new ListNode(value);
+    dummyNode.next = head; 
+    ListNode cur = head; 
+    ListNode pre = dummyNode; 
+    while (cur != null) {
+      if (value > cur.value) {
+        pre = cur; 
+        cur = cur.next; 
+      } else {
+        break;
+      }
+    }
+    insertNode.next = cur;
+    pre.next = insertNode; 
+    return dummyNode.next;
+  }
+}
