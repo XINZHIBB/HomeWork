@@ -21,13 +21,9 @@ public class Solution {
     dummyNode.next = head; 
     ListNode cur = head; 
     ListNode pre = dummyNode; 
-    while (cur != null) {
-      if (value > cur.value) {
-        pre = cur; 
-        cur = cur.next; 
-      } else {
-        break;
-      }
+    while (cur != null && value > cur.value) {
+      pre = cur; 
+      cur = cur.next; 
     }
     insertNode.next = cur;
     pre.next = insertNode; 
