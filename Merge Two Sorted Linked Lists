@@ -1,0 +1,41 @@
+Merge two sorted lists into one large sorted list.
+
+Examples
+
+L1 = 1 -> 4 -> 6 -> null, L2 = 2 -> 5 -> null, merge L1 and L2 to 1 -> 2 -> 4 -> 5 -> 6 -> null
+L1 = null, L2 = 1 -> 2 -> null, merge L1 and L2 to 1 -> 2 -> null
+L1 = null, L2 = null, merge L1 and L2 to null
+
+Solution: 
+Step1: create a dummynode. 
+Step2: two pointer walk through the L1 & L2, who is smaller then insert this node to new list. 
+Step3: insert the rest to the new list if L1 or L2 already reach the end
+
+
+public class Solution {
+  public ListNode merge(ListNode one, ListNode two) {
+    // write your solution here
+    ListNode dNode = new ListNode(0);
+    ListNode cur = dNode; 
+    
+    while (one != null && two != null) {
+      if (one.value <= two.value) {
+        cur.next = one; 
+        cur = one; 
+        one = one.next; 
+      } else {
+        cur.next = two; 
+        cur = two; 
+        two = two.next; 
+      }
+    }
+    
+    if (one != null) {
+      cur.next = one; 
+    } else {
+      cur.next = two; 
+    }
+    return dNode.next;
+  }
+}
+
