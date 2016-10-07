@@ -1,0 +1,88 @@
+ReOrder Linked List
+Reorder the given singly-linked list N1 -> N2 -> N3 -> N4 -> … -> Nn -> null to be N1- > Nn -> N2 -> Nn-1 -> N3 -> Nn-2 -> … -> null
+
+Examples
+
+L = null, is reordered to null
+L = 1 -> null, is reordered to 1 -> null
+L = 1 -> 2 -> 3 -> 4 -> null, is reordered to 1 -> 4 -> 2 -> 3 -> null
+L = 1 -> 2 -> 3 -> null, is reordred to 1 -> 3 -> 2 -> null
+
+Solution:  
+主要是三个小的Linksedlist的题目相结合每个小的部分需要比较熟练。 
+Step1: Find the middle node to partition the list. de-link is important 
+Step2: reverse the second List;
+Step3: merge this two lists. 
+
+/*
+ * class ListNode {
+ *   public int value;
+ *   public ListNode next;
+ *   public ListNode(int value) {
+ *     this.value = value;
+ *     next = null;
+ *   }
+ * }
+ */
+public class Solution {
+  public ListNode reorder(ListNode head) {
+    // Write your solution here.
+    if (head == null || head.next == null) {
+      return head; 
+    }
+  
+    ListNode mid = middle(head); 
+    ListNode one = head; 
+    ListNode two = mid.next; 
+    mid.next = null; // de-link 
+    return merge(one, reverse(two));
+  }
+  
+  private ListNode middle(ListNode head) {
+    ListNode fast = head;
+    ListNode slow = head; 
+    
+    while (fast.next != null && fast.next.next != null) {
+      slow = slow.next;
+      fast = fast.next.next;
+    }
+    return slow; 
+  }
+  
+  private ListNode reverse(ListNode head) {
+    ListNode pre = null; 
+    
+    while (head != null) {
+      ListNode next = head.next;
+      head.next = pre; 
+      pre = head; 
+      head = next;
+    }
+    return pre;     
+  }
+  
+  private ListNode merge(ListNode one, ListNode two) {
+    ListNode dummy = new ListNode(0);
+    ListNode cur = dummy; 
+    
+    while (one != null && two != null) {
+      cur.next = one; 
+      one = one.next; 
+      cur.next.next = two; 
+      two = two.next; 
+      cur = cur.next.next; 
+    }
+    
+    if (one != null) {
+      cur.next = one; 
+    } else {
+      cur.next = two; 
+    }
+    
+    return dummy.next; 
+  }
+  
+  
+}
+
+
