@@ -1,0 +1,27 @@
+Check if a given linked list has a cycle. Return true if it does, otherwise return false.
+
+Solution:
+涉及到Linked list的操作之类的题目 可以多往快慢指针上思考
+
+public class Solution {
+  public boolean hasCycle(ListNode head) {
+    // write your solution here
+    if (head == null) {
+      return false; 
+    } 
+    
+    ListNode fast = head;
+    ListNode slow = head; 
+    
+    while (fast.next != null && fast.next.next != null) {
+      slow = slow.next; 
+      fast = fast.next.next; 
+      if (slow == fast) {
+        return true; 
+      }
+    }
+     
+     
+    return false;
+  }
+}
