@@ -1,0 +1,76 @@
+
+Implement an iterative, in-order traversal of a given binary tree, return the list of keys of each node in the tree as it is in-order traversed.
+
+Examples
+
+        5
+
+      /    \
+
+    3        8
+
+  /   \        \
+
+1      4        11
+
+In-order traversal is [1, 3, 4, 5, 8, 11]
+
+
+
+
+
+Corner Cases
+
+What if the given binary tree is null? Return an empty list in this case.
+How is the binary tree represented?
+
+We use the level order traversal sequence with a special symbol "#" denoting the null node.
+
+For Example:
+
+The sequence [1, 2, 3, #, #, 4] represents the following binary tree:
+
+    1
+
+  /   \
+
+ 2     3
+
+      /
+
+    4
+    
+    
+Solution: 
+1) Create an empty stack S.
+2) Initialize current node as root
+3) Push the current node to S and set current = current->left until current is NULL
+4) If current is NULL and stack is not empty then 
+     a) Pop the top item from stack.
+     b) Print the popped item, set current = popped_item->right 
+     c) Go to step 3.
+5) If current is NULL and stack is empty then we are done.
+
+
+public class Solution {
+  public List<Integer> inOrder(TreeNode root) {
+    // Write your solution here.
+    List<Integer> inorder = new ArrayList<>(); 
+    Deque<TreeNode> stack = new LinkedList<>();  //类型
+    
+    TreeNode cur = root; 
+    
+    while (cur != null || !stack.isEmpty()) {
+      // walk to the most left 
+      if (cur != null) {
+        stack.offerFirst(cur);
+        cur = cur.left; 
+      } else {
+        cur = stack.pollFirst();
+        inorder.add(cur.key); 
+        cur = cur.right; 
+      }
+    }
+    return inorder;
+  }
+}
