@@ -1,0 +1,88 @@
+Get the list of list of keys in a given binary tree layer by layer. Each layer is represented by a list of keys and the keys are traversed from left to right.
+
+Examples
+
+        5
+
+      /    \
+
+    3        8
+
+  /   \        \
+
+ 1     4        11
+
+the result is [ [5], [3, 8], [1, 4, 11] ]
+
+Corner Cases
+
+What if the binary tree is null? Return an empty list of list in this case.
+How is the binary tree represented?
+
+We use the level order traversal sequence with a special symbol "#" denoting the null node.
+
+For Example:
+
+The sequence [1, 2, 3, #, #, 4] represents the following binary tree:
+
+    1
+
+  /   \
+
+ 2     3
+
+      /
+
+    4
+
+Solution: 
+Step1: create a queue and push root in it 
+Step2: while the queue is not empty:
+       Step2.1: record the size of queue k and creat a new list 
+       Step2.1: repeat poll the item from the queue and add it to list 
+                and push its left, right children to the queue  k times,
+       Step3.1: add the list to result list. 
+
+/**
+ * public class TreeNode {
+ *   public int key;
+ *   public TreeNode left;
+ *   public TreeNode right;
+ *   public TreeNode(int key) {
+ *     this.key = key;
+ *   }
+ * }
+ */
+public class Solution {
+  public List<List<Integer>> layerByLayer(TreeNode root) {
+    // Write your solution here.
+    if (root == null) {
+      return new ArrayList<List<Integer>>();
+    }
+    List<List<Integer>> result = new ArrayList<List<Integer>>(); 
+    Queue<TreeNode> queue = new LinkedList<TreeNode>();
+    queue.offer(root);
+    while (!queue.isEmpty()) {
+      int size = queue.size();
+      List<Integer> layer = new ArrayList<Integer>();
+      for (int i = 0; i < size; i++) {
+        TreeNode cur = queue.poll(); 
+        layer.add(cur.key);
+        if (cur.left != null) {
+          queue.offer(cur.left);
+        }
+        
+        if (cur.right != null) {
+          queue.offer(cur.right); 
+        }
+        
+      }
+      result.add(layer);
+    }
+    
+    return result;
+  }
+}
+            
+             
+
