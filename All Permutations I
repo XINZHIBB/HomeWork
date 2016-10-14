@@ -1,0 +1,43 @@
+Given a string with no duplicate characters, return a list with all permutations of the characters.
+
+Examples
+
+Set = “abc”, all permutations are [“abc”, “acb”, “bac”, “bca”, “cab”, “cba”]
+Set = "", all permutations are [""]
+Set = null, all permutations are []
+
+Solution: 
+DFS. 
+The number of the layers is the number of the characters  
+Each layer swap the current position character with the character whose index is bigger than it and including it. 
+
+public class Solution {
+  public List<String> permutations(String set) {
+    // Write your solution here.
+    List<String> result = new ArrayList<String>(); 
+    if (set == null) {
+      return result; 
+    }
+    char[] charArray = set.toCharArray(); 
+    helper(charArray, 0, result);
+    return result;
+  }
+  
+  private void helper(char[] charArray, int index, List<String> result) {
+    if (index == charArray.length) {
+      result.add(new String(charArray)); 
+      return;
+    }
+    
+    for (int i = index; i < charArray.length; i++) {
+      swap(index, i, charArray);
+      helper(charArray, index + 1, result); 
+      swap(i, index, charArray);
+    }
+  }
+  private void swap(int l, int r, char[] charArray) {
+    char tmp = charArray[l];
+    charArray[l] = charArray[r];
+    charArray[r] = tmp; 
+  }
+}
