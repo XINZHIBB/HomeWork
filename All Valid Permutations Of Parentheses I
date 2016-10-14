@@ -1,0 +1,43 @@
+Given N pairs of parentheses “()”, return a list with all the valid permutations.
+
+Assumptions
+
+N >= 0
+Examples
+
+N = 1, all valid permutations are ["()"]
+N = 3, all valid permutations are ["((()))", "(()())", "(())()", "()(())", "()()()"]
+N = 0, all valid permutations are [""]
+
+Solution: 
+Total # of layers should be the number of the parentheses. 
+Each layer : case1: add left parenthese, if l < n, 
+             case2: add right parenthese, if r < l, 
+             
+  public List<String> validParentheses(int n) {
+    // Write your solution here.
+    StringBuilder sb = new StringBuilder(); 
+    List<String> result = new ArrayList<String>();
+    helper(sb, 0, 0, result, n);
+    return result;
+  }
+  
+  private void helper(StringBuilder sb, int l, int r, List<String> result, int n) {
+    // base case
+    if (l == n && r == n) {
+      result.add(sb.toString());
+      return; 
+    }
+    
+    if (l < n) { // add"("
+      helper(sb.append("("), l + 1, r, result, n);
+      sb.deleteCharAt(sb.length() - 1); 
+    }
+    
+    if (r < l) { // add ")"
+      helper(sb.append(")"), l, r + 1, result, n);
+      sb.deleteCharAt(sb.length() - 1);
+    }
+    
+  }
+}
