@@ -18,24 +18,24 @@ Each layer : case1: add left parenthese, if l < n,
     // Write your solution here.
     StringBuilder sb = new StringBuilder(); 
     List<String> result = new ArrayList<String>();
-    helper(sb, 0, 0, result, n);
+    helper(sb, 0, 0, result);
     return result;
   }
   
-  private void helper(StringBuilder sb, int l, int r, List<String> result, int n) {
+  private void helper(StringBuilder sb, int l, int r, List<String> result) {
     // base case
-    if (l == n && r == n) {
+    if (l == 0 && r == 0) {
       result.add(sb.toString());
       return; 
     }
     
-    if (l < n) { // add"("
-      helper(sb.append("("), l + 1, r, result, n);
+    if (l > 0) { // add"("
+      helper(sb.append("("), l - 1, r, result, n);
       sb.deleteCharAt(sb.length() - 1); 
     }
     
-    if (r < l) { // add ")"
-      helper(sb.append(")"), l, r + 1, result, n);
+    if (r > l) { // add ")"
+      helper(sb.append(")"), l, r - 1, result, n);
       sb.deleteCharAt(sb.length() - 1);
     }
     
