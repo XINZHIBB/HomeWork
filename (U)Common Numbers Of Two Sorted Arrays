@@ -1,0 +1,18 @@
+Find all numbers that appear in both of two sorted arrays (the two arrays are all sorted in ascending order).
+
+Assumptions
+
+In each of the two sorted arrays, there could be duplicate numbers.
+Both two arrays are not null.
+Examples
+
+A = {1, 1, 2, 2, 3}, B = {1, 1, 2, 5, 6}, common numbers are [1, 1, 2]
+
+Solution:
+two pointer; 
+Step1: create two pointer i, j for A and B. 
+Step2: two pointers move from the first elemnt to the last element. 
+       case1: A[i] == B[j] then i++, j++, add this element to the result array. 
+       case2: A[i] < B[j] then i++ 
+       case3: A[i] > B[j] then j++
+Step3: repeat Step2 until i or j reach the end of  the array. 
