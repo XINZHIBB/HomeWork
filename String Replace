@@ -1,0 +1,51 @@
+Given an original string input, and two strings S and T, replace all occurrences of S in input with T.
+
+Assumptions
+
+input, S and T are not null, S is not empty string
+Examples
+
+input = "appledogapple", S = "apple", T = "cat", input becomes "catdogcat"
+input = "dodododo", S = "dod", T = "a", input becomes "aoao"
+
+
+Solution: 
+Assumption: 
+1. S can be " ". and T can be empty string. 
+2. The length of T can be bigger than that of S. 
+
+case1: The length of T is smaller than the length S
+appledogapple cat 
+f
+s 
+
+Step1: fast and slow pointers start from the left to the right direction 
+Step2: while fast pointer doesnot reach the right most,repeat the following step 
+Step3: if fast pointer is the starting index of s
+		then replace s with t starting from the position the slow pointer points to, f = f + s.length(), s = s + t.length()
+	 else 
+		copy the char fast pointer points to to position slow pointer points to, slow++, fast++. 
+
+
+
+
+
+case2: The length of S is bigger than the length T
+catdogcat apple 
+
+aaaappledoga p p l e   apple
+  f
+  s
+
+       
+Step1: scan the input string to find out how many matches of s and store the last index of each match. 
+
+and create a empty string with length equals to the sum of input.length() + matches*(t.length() - s.length())
+Step2: copy the string to the new array. fast and slow pointers start from the left. fast starts from old string.length - 1, slow starts from the new string.length - 1
+Step3: while the number of matches > 0, repeat the following
+Step4: if fast pointers == the last index of match 
+		then copy t from the slow pointer, slow = slow - t.length(), fast = fast - s.length(); 
+	  else array[slow--] == array[fast--]
+
+
+
