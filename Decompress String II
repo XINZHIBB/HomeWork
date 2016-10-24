@@ -1,0 +1,46 @@
+Given a string in compressed form, decompress it to the original string. The adjacent repeated characters in the original string are compressed to have the character followed by the number of repeated occurrences.
+Assumptions
+The string is not null
+The characters used in the original string are guaranteed to be ‘a’ - ‘z’
+There are no adjacent repeated characters with length > 9
+Examples
+“a1c0b2c4” → “abbcccc”
+1+0+2+4 = 7 the length of the new char array should be 7 
+
+a1b4ccc
+f
+s
+
+
+
+
+Solution: 
+case1: the decoded string length of a0,a1,a2 is smaller or equal to the length of 2.
+case2: the decoded string length of a3, a4, ..., a9 is bigger than the length of 2. 
+
+Go through the string twice. In the first time, deal with the case1. Since it can be handled in place. In the second time, deal with the case2. 
+
+
+
+
+
+
+
+Step1: deal with case1. fast pointer starts from index0; slow pointer starts from index0.
+	  if arr[fast+1] <= "2"
+char a = arr[fast], 
+repeat(digit): arr[slow++] = a;
+fast = fast + 2
+  else 
+fast = fast + 2 
+
+Step2: deal with case 2 based on the result of case 1. calculate the total length. Then create a new array and start from that. fast pointer starts from old array length - 1, slow pointer starts from the new array length - 1.
+	if array[fast] == 'a' - 'z'
+		newarray[slow] = array[fast] 
+		slow -- 
+		fast -- 
+else array[fast] == '3'-'9'
+	repeat(array[fast]):
+		newarray[slow] = array[fast-1]
+			slow --; 
+		fast = fast - 2
