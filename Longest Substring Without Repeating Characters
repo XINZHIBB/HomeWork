@@ -1,0 +1,12 @@
+String
+Longest Substring Without Repeating Characters
+Given a string, find the longest substring without any repeating characters and return the length of it. The input string is guaranteed to be not null.
+For example, the longest substring without repeating letters for "bcdfbd" is "bcdf", we should return 4 in this case.
+Solution:
+HashSet store the consecutive characters.
+global max value 
+fast pointer + slow pointer 
+both pointers starts from the index 0; 
+
+when current character the fast pointer points to is not in the set, add it to the set and move fast pointer
+when current character the fast pointer points to is in the set, remove the character the slow pointer points to and move the slow pointer until the current character can be added in the set. 
